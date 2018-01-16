@@ -8,13 +8,13 @@ import android.util.Log;
 import android.view.View;
 import java.util.Date;
 
-public class AscoltatorePage1 implements View.OnClickListener {
+public class AscoltatoreConnectionActivity implements View.OnClickListener {
 
-    private Page1 app;
+    private ConnectionActivity app;
     private LocationManager locationManager = null;
     private MyLocationListener locationListener;
 
-    public AscoltatorePage1(final Page1 app) {
+    public AscoltatoreConnectionActivity(final ConnectionActivity app) {
         int permissionCheck = ContextCompat.checkSelfPermission(app, Manifest.permission.ACCESS_FINE_LOCATION);
         locationManager = (LocationManager) app.getSystemService(Context.LOCATION_SERVICE);
         this.app = app;

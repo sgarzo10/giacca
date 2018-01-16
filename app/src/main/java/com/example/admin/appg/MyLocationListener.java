@@ -18,9 +18,9 @@ import java.util.Locale;
 
 public class MyLocationListener implements LocationListener {
 
-    private Page1 app;
+    private ConnectionActivity app;
 
-    public MyLocationListener(Page1 app){
+    public MyLocationListener(ConnectionActivity app){
         this.app=app;
     }
 

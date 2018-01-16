@@ -22,9 +22,9 @@ public class BluetoothConnection {
     private BluetoothAdapter bluetoothAdapter;
     private boolean letto = false;
     private MyHandler h;
-    private Page1 app;
+    private ConnectionActivity app;
 
-    public BluetoothConnection (Page1 app){
+    public BluetoothConnection (ConnectionActivity app){
         this.app = app;
         h = new MyHandler(app);
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();

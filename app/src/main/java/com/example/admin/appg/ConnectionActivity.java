@@ -8,9 +8,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import java.util.ArrayList;
 
-public class Page1 extends AppCompatActivity {
+public class ConnectionActivity extends AppCompatActivity {
 
-    private AscoltatorePage1 ascoltatore;
+    private AscoltatoreConnectionActivity ascoltatore;
     private BluetoothConnection bluetooth;
     private Button invia;
     private Button setData;
@@ -60,7 +60,7 @@ public class Page1 extends AppCompatActivity {
         views = new ArrayList<View>();
         String nome = getIntent().getExtras().getString("nome");
         String mac = getIntent().getExtras().getString("mac");
-        ascoltatore = new AscoltatorePage1(this);
+        ascoltatore = new AscoltatoreConnectionActivity(this);
         bluetooth = new BluetoothConnection(this);
         invia.setOnClickListener(ascoltatore);
         setData.setOnClickListener(ascoltatore);

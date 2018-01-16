@@ -5,9 +5,9 @@ import android.widget.TextView;
 public class MyHandler extends android.os.Handler{
 
     private StringBuilder sb = new StringBuilder();
-    private Page1 app;
+    private ConnectionActivity app;
 
-    public MyHandler(Page1 app) {this.app=app;}
+    public MyHandler(ConnectionActivity app) {this.app=app;}
 
     @Override
     public void handleMessage(android.os.Message msg) {

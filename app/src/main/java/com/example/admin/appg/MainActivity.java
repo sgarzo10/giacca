@@ -16,7 +16,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     private Ricevitore ricevitore;
-    private Ascoltatore ascoltatore;
+    private AscoltatoreMainActivity ascoltatore;
     private Button associati;
     private ImageButton cerca;
     private LinearLayout linear;
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     public TextView getT() {return t;}
     public LinearLayout getLinear() {return linear;}
-    public Ascoltatore getAscoltatore() {return ascoltatore;}
+    public AscoltatoreMainActivity getAscoltatore() {return ascoltatore;}
     public Button getAssociati() {return associati;}
     public ImageButton getCerca() {return cerca;}
     public ListView getLv() {return lv;}
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
         ricevitore = new Ricevitore(this);
         registerReceiver(ricevitore, filter);
-        ascoltatore= new Ascoltatore(this);
+        ascoltatore= new AscoltatoreMainActivity(this);
         associati.setOnClickListener(ascoltatore);
         cerca.setOnClickListener(ascoltatore);
         spegni.setOnClickListener(ascoltatore);

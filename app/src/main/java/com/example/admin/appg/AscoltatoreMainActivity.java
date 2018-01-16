@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class Ascoltatore implements View.OnClickListener {
+public class AscoltatoreMainActivity implements View.OnClickListener {
 
     private MainActivity app;
     private boolean ricerca;
@@ -28,7 +28,7 @@ public class Ascoltatore implements View.OnClickListener {
     public ArrayList<String> getNomi() {return nomi;}
     public ArrayList<String> getMac() {return mac;}
 
-    public Ascoltatore(MainActivity app)
+    public AscoltatoreMainActivity(MainActivity app)
     {
         this.app=app;
         ricerca= false;
@@ -146,7 +146,7 @@ public class Ascoltatore implements View.OnClickListener {
     public void connetti(int i)
     {
         inRicerca();
-        Intent openPage1 = new Intent(app,Page1.class);
+        Intent openPage1 = new Intent(app,ConnectionActivity.class);
         openPage1.putExtra("nome", nomi.get(i));
         openPage1.putExtra("mac", mac.get(i));
         mac.clear();
