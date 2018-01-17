@@ -7,7 +7,7 @@ public class MyHandler extends android.os.Handler{
     private StringBuilder sb;
     private ConnectionActivity app;
 
-    public MyHandler(ConnectionActivity app) {this.app=app;
+    MyHandler(ConnectionActivity app) {this.app=app;
         sb = new StringBuilder();
     }
 

@@ -24,7 +24,6 @@ public class MyLocationListener implements LocationListener {
         Log.i("myApp", "location change");
         String longitude = "Longitude: " + loc.getLongitude();
         String latitude = "Latitude: " + loc.getLatitude();
-        /*------- To get city name from coordinates -------- */
         String cityName = null;
         Geocoder gcd = new Geocoder(app.getBaseContext(), Locale.getDefault());
         List<Address> addresses;
@@ -43,8 +42,11 @@ public class MyLocationListener implements LocationListener {
         app.getT().setText(s);
         app.getTLa().setText(Double.toString(loc.getLatitude()));
         app.getTLo().setText(Double.toString(loc.getLongitude()));
-        app.getBluetooth().invia("LA:" + Double.toString(loc.getLatitude()) + "LO:" + Double.toString(loc.getLongitude()) + "CITY:" + cityName);
-        Log.i("stringone del cazzo",s);
+        if (app.getBluetooth().invia("LA:" + Double.toString(loc.getLatitude()) + "LO:" + Double.toString(loc.getLongitude()) + "CITY:" + cityName))
+            Log.i("SEND","Messaggio inviato");
+        else
+            Log.w("SEND","Messaggio non inviato");
+        Log.i("MESSAGE",s);
     }
 
     @Override

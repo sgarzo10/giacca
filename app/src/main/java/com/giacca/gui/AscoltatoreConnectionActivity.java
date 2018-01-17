@@ -26,15 +26,24 @@ public class AscoltatoreConnectionActivity implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.invia:
-                app.getBluetooth().invia(app.getE().getText().toString());
+                Log.i("case","invia");
+                if (app.getBluetooth().invia(app.getE().getText().toString()))
+                    Log.i("SEND","Messaggio inviato");
+                else
+                    Log.w("SEND","Messaggio non inviato");
+                Log.i("MESSAGE",app.getE().getText().toString());
                 break;
             case R.id.setData:
                 Log.i("case","setData");
-                app.getBluetooth().invia("data" + new Date().toString());
+                if (app.getBluetooth().invia("data" + new Date().toString()))
+                    Log.i("SEND","Messaggio inviato");
+                else
+                    Log.w("SEND","Messaggio non inviato");
+                Log.i("MESSAGE","data" + new Date().toString());
                 break;
             case R.id.setGps:
-                Log.i("case","startSetGps");
-                app.getT().setText(app.getT().getText() + "\n" + "Provo a leggere GPS!");
+                Log.i("case","setGps");
+                app.getT().setText(R.string.try_gps);
                 try {
                     int permissionCheck = ContextCompat.checkSelfPermission(app, Manifest.permission.ACCESS_FINE_LOCATION);
                     locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 5, locationListener);
@@ -42,7 +51,6 @@ public class AscoltatoreConnectionActivity implements View.OnClickListener {
                 catch (SecurityException s){
                     s.printStackTrace();
                 }
-                Log.i("stato","endSetGps");
                 break;
 
         }

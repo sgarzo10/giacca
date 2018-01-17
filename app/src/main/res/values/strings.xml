@@ -17,4 +17,5 @@
     <string name="off">Spento</string>
     <string name="now_on">Già acceso</string>
     <string name="connection">Mi sto connettendo…</string>
+    <string name="try_gps">Provo a leggere GPS!</string>
 </resources>
