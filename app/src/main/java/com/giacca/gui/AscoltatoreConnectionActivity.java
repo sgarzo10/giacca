@@ -1,4 +1,4 @@
-package com.example.admin.appg;
+package com.giacca.gui;
 
 import android.Manifest;
 import android.content.Context;
@@ -6,15 +6,16 @@ import android.location.LocationManager;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
+import com.giacca.R;
 import java.util.Date;
 
 public class AscoltatoreConnectionActivity implements View.OnClickListener {
 
     private ConnectionActivity app;
-    private LocationManager locationManager = null;
+    private LocationManager locationManager;
     private MyLocationListener locationListener;
 
-    public AscoltatoreConnectionActivity(final ConnectionActivity app) {
+    AscoltatoreConnectionActivity(final ConnectionActivity app) {
         int permissionCheck = ContextCompat.checkSelfPermission(app, Manifest.permission.ACCESS_FINE_LOCATION);
         locationManager = (LocationManager) app.getSystemService(Context.LOCATION_SERVICE);
         this.app = app;

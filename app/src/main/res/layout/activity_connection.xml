@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.admin.appg.Page1">
+    tools:context="com.giacca.gui.ConnectionActivity">
 
     <EditText
         android:layout_width="wrap_content"
@@ -75,8 +75,7 @@
         android:layout_above="@+id/tLo"
         android:id="@+id/txtLat"
         android:textSize="18sp"
-        android:layout_toEndOf="@+id/tLo"
-        android:layout_below="@+id/textView5" />
+        android:layout_toEndOf="@+id/tLo" />
 
     <TextView
         android:text="x.xxxxx"
@@ -111,7 +110,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/setGps"
-        android:layout_above="@+id/txtLat"
-        android:layout_toEndOf="@+id/space3" />
+        android:layout_above="@+id/txtLat" />
 
 </RelativeLayout>

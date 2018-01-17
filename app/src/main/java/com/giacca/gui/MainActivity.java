@@ -1,17 +1,16 @@
-package com.example.admin.appg;
+package com.giacca.gui;
 
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.bluetooth.*;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.giacca.R;
+import com.giacca.bluetooth.Ricevitore;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,6 +66,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         TextView t= (TextView) findViewById(R.id.textView);
-        t.setText("Connessione terminata");
+        t.setText(R.string.finish_connection);
     }
 }

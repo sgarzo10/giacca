@@ -1,4 +1,4 @@
-package com.example.admin.appg;
+package com.giacca.bluetooth;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -9,7 +9,8 @@ import android.support.v4.content.ContextCompat;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListView;
+import com.giacca.R;
+import com.giacca.gui.MainActivity;
 
 public class Ricevitore extends BroadcastReceiver {
 
@@ -24,15 +25,15 @@ public class Ricevitore extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
         if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action)) {
-            app.getT().setText("Ricerca in corso...");
+            app.getT().setText(R.string.do_search);
             trovati=0;
         } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-            app.getT().setText("Ricerca finita!");
+            app.getT().setText(R.string.search_finish);
             ImageButton b= (ImageButton) app.findViewById(R.id.cerca);
             b.setImageDrawable(ContextCompat.getDrawable(app, R.drawable.lente));
-            app.getAscoltatore().setRicerca(false);
+            app.getAscoltatore().setRicerca();
         } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
-            BluetoothDevice device = (BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+            BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
             app.getAscoltatore().getNomi().add(device.getName());
             app.getAscoltatore().getMac().add(device.getAddress());
             ArrayAdapter adapter = new ArrayAdapter(app,android.R.layout.simple_list_item_1, app.getAscoltatore().getNomi());
@@ -41,7 +42,7 @@ public class Ricevitore extends BroadcastReceiver {
             app.getLv1().setAdapter(adapter1);
             Button pr= new Button(app);
             pr.setId(R.id.connetti);
-            pr.setText("Connetti");
+            pr.setText(R.string.connect);
             pr.setTextSize(10);
             pr.setTag(trovati);
             pr.setOnClickListener(app.getAscoltatore());

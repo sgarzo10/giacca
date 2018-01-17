@@ -1,26 +1,27 @@
-package com.example.admin.appg;
+package com.giacca.bluetooth;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.view.View;
 import android.widget.TextView;
+import com.giacca.R;
+import com.giacca.gui.ConnectionActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by Admin on 28/12/2017.
+/*
+    TODO: Rendere indipendente la classe dall'activity
  */
-
 public class BluetoothConnection {
-    private BluetoothSocket mmSocket = null;
-    private OutputStream outStream = null;
-    private InputStream input = null;
+    private BluetoothSocket mmSocket;
+    private OutputStream outStream;
+    private InputStream input;
     private BluetoothAdapter bluetoothAdapter;
-    private boolean letto = false;
+    private boolean letto;
     private MyHandler h;
     private ConnectionActivity app;
 
@@ -28,6 +29,10 @@ public class BluetoothConnection {
         this.app = app;
         h = new MyHandler(app);
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        mmSocket = null;
+        outStream = null;
+        input = null;
+        letto = false;
     }
 
     public void connetti(String nome, String mac) {
@@ -37,21 +42,22 @@ public class BluetoothConnection {
         try {
             mmSocket = (BluetoothSocket) mmDevice.getClass().getMethod("createRfcommSocket", new Class[]{int.class}).invoke(mmDevice, 1);
         } catch (Exception e) {
-            textView.setText("Errore1");
+            textView.setText(R.string.error);
         }
         try {
             mmSocket.connect();
             outStream = mmSocket.getOutputStream();
             input = mmSocket.getInputStream();
-            textView.setText("Connesso con: " + nome);
+            String s = R.string.connected + nome;
+            textView.setText(s);
             app.getInvia().setVisibility(View.VISIBLE);
             app.getE().setVisibility(View.VISIBLE);
         } catch (Exception e1) {
-            textView.setText("Errore 2");
+            textView.setText(R.string.error);
             try {
                 mmSocket.close();
             } catch (Exception e2) {
-                textView.setText("Errore 3");
+                textView.setText(R.string.error);
             }
         }
     }
@@ -62,9 +68,9 @@ public class BluetoothConnection {
         try {
             mmSocket.close();
             outStream = null;
-            textView.setText("Disconnesso");
+            textView.setText(R.string.disconnected);
         } catch (Exception e) {
-            textView.setText("Errore");
+            textView.setText(R.string.error);
         }
     }
 
@@ -75,22 +81,21 @@ public class BluetoothConnection {
         try {
             outStream.write(msgBuffer);
         } catch (IOException e) {
-            textView.setText("Errore");
+            textView.setText(R.string.error);
             return false;
         }
-        byte[] buffer = new byte[256];  // buffer store for the stream
-        int bytes; // bytes returned from read()
+        byte[] buffer = new byte[256];
+        int bytes;
         try {
             TimeUnit.SECONDS.sleep(1);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         while (!letto) {
             try {
-                // Read from the InputStream
-                bytes = input.read(buffer);        // Get number of bytes and message in "buffer"
-                h.obtainMessage(1, bytes, -1, buffer).sendToTarget();     // Send to message queue Handler
+                bytes = input.read(buffer);
+                h.obtainMessage(1, bytes, -1, buffer).sendToTarget();
                 letto = true;
-            } catch (IOException e) {
+            } catch (IOException ignored) {
             }
         }
         letto = false;

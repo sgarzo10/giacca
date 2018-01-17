@@ -1,4 +1,4 @@
-package com.example.admin.appg;
+package com.giacca.gui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,15 +6,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.giacca.R;
+import com.giacca.bluetooth.BluetoothConnection;
 import java.util.ArrayList;
 
 public class ConnectionActivity extends AppCompatActivity {
 
-    private AscoltatoreConnectionActivity ascoltatore;
     private BluetoothConnection bluetooth;
     private Button invia;
-    private Button setData;
-    private Button setGps;
     private EditText e;
     private TextView t;
     private TextView txtLa;
@@ -49,18 +48,18 @@ public class ConnectionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_page1);
+        setContentView(R.layout.activity_connection);
         invia = (Button) findViewById(R.id.invia);
-        setData = (Button) findViewById(R.id.setData);
-        setGps = (Button) findViewById(R.id.setGps);
+        Button setData = (Button) findViewById(R.id.setData);
+        Button setGps = (Button) findViewById(R.id.setGps);
         txtLa = (TextView) findViewById(R.id.txtLat);
         txtLo = (TextView) findViewById(R.id.txtLo);
         e = (EditText) findViewById(R.id.inserisci);
         t = (TextView) findViewById(R.id.txtViewLog);
-        views = new ArrayList<View>();
+        views = new ArrayList<>();
         String nome = getIntent().getExtras().getString("nome");
         String mac = getIntent().getExtras().getString("mac");
-        ascoltatore = new AscoltatoreConnectionActivity(this);
+        AscoltatoreConnectionActivity ascoltatore = new AscoltatoreConnectionActivity(this);
         bluetooth = new BluetoothConnection(this);
         invia.setOnClickListener(ascoltatore);
         setData.setOnClickListener(ascoltatore);

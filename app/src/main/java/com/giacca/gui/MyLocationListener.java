@@ -1,4 +1,4 @@
-package com.example.admin.appg;
+package com.giacca.gui;
 
 import android.location.Address;
 import android.location.Geocoder;
@@ -6,21 +6,16 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by Admin on 26/12/2017.
- */
 
 public class MyLocationListener implements LocationListener {
 
     private ConnectionActivity app;
 
-    public MyLocationListener(ConnectionActivity app){
+    MyLocationListener(ConnectionActivity app){
         this.app=app;
     }
 
