@@ -1,4 +1,4 @@
-package com.giacca.gui;
+package com.giacca.gui.device;
 
 import android.Manifest;
 import android.content.Context;

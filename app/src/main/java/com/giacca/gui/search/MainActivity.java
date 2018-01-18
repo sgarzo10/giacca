@@ -1,4 +1,4 @@
-package com.giacca.gui;
+package com.giacca.gui.search;
 
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.giacca.R;
-import com.giacca.bluetooth.Ricevitore;
 
 public class MainActivity extends AppCompatActivity {
 

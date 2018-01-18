@@ -1,4 +1,4 @@
-package com.giacca.bluetooth;
+package com.giacca.gui.search;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -10,14 +10,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import com.giacca.R;
-import com.giacca.gui.MainActivity;
 
 public class Ricevitore extends BroadcastReceiver {
 
     private MainActivity app;
     private int trovati;
 
-    public Ricevitore(MainActivity app) {
+    Ricevitore(MainActivity app) {
         this.app=app;
         trovati=0;
     }

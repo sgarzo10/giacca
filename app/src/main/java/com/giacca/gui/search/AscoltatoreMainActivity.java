@@ -1,4 +1,4 @@
-package com.giacca.gui;
+package com.giacca.gui.search;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import com.giacca.R;
 import com.giacca.bluetooth.Bluetooth;
+import com.giacca.gui.device.ConnectionActivity;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Set;
@@ -20,9 +21,9 @@ public class AscoltatoreMainActivity implements View.OnClickListener {
     private ArrayList<String> nomi;
     private ArrayList<String> mac;
     private Bluetooth bluetooth;
-    public void setRicerca() {this.ricerca = false;}
-    public ArrayList<String> getNomi() {return nomi;}
-    public ArrayList<String> getMac() {return mac;}
+    void setRicerca() {this.ricerca = false;}
+    ArrayList<String> getNomi() {return nomi;}
+    ArrayList<String> getMac() {return mac;}
 
     AscoltatoreMainActivity(MainActivity app)
     {

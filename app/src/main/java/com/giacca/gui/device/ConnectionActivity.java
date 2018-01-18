@@ -1,4 +1,4 @@
-package com.giacca.gui;
+package com.giacca.gui.device;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,17 +17,17 @@ public class ConnectionActivity extends AppCompatActivity {
     private TextView txtLa;
     private TextView txtLo;
 
-    public BluetoothConnection getBluetooth() { return bluetooth;}
-    public EditText getE() {
+    BluetoothConnection getBluetooth() { return bluetooth;}
+    EditText getE() {
         return e;
     }
-    public TextView getT() {
+    TextView getT() {
         return t;
     }
-    public TextView getTLa() {
+    TextView getTLa() {
         return txtLa;
     }
-    public TextView getTLo() {
+    TextView getTLo() {
         return txtLo;
     }
 

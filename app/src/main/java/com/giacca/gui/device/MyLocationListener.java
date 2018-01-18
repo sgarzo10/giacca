@@ -1,4 +1,4 @@
-package com.giacca.gui;
+package com.giacca.gui.device;
 
 import android.location.Address;
 import android.location.Geocoder;

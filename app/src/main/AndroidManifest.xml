@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.giacca.gui.MainActivity"
+            android:name="com.giacca.gui.search.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.giacca.gui.ConnectionActivity"
+            android:name="com.giacca.gui.device.ConnectionActivity"
             android:screenOrientation="portrait">
         </activity>
     </application>
