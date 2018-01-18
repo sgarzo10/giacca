@@ -27,19 +27,17 @@ public class AscoltatoreConnectionActivity implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.invia:
                 Log.i("case","invia");
-                if (app.getBluetooth().invia(app.getE().getText().toString()))
-                    Log.i("SEND","Messaggio inviato");
-                else
-                    Log.w("SEND","Messaggio non inviato");
-                Log.i("MESSAGE",app.getE().getText().toString());
+                if (!app.getBluetooth().invia(app.getE().getText().toString()))
+                    app.getT().setText(R.string.error);
+                else {
+                    String mex = "RX: "+app.getBluetooth().ricevi();
+                    app.getT().setText(mex);
+                }
                 break;
             case R.id.setData:
                 Log.i("case","setData");
-                if (app.getBluetooth().invia("data" + new Date().toString()))
-                    Log.i("SEND","Messaggio inviato");
-                else
-                    Log.w("SEND","Messaggio non inviato");
-                Log.i("MESSAGE","data" + new Date().toString());
+                if (!app.getBluetooth().invia("data" + new Date().toString()))
+                    app.getT().setText(R.string.error);
                 break;
             case R.id.setGps:
                 Log.i("case","setGps");

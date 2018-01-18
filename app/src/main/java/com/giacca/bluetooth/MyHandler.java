@@ -1,14 +1,16 @@
 package com.giacca.bluetooth;
 
-import com.giacca.gui.ConnectionActivity;
 
 public class MyHandler extends android.os.Handler{
 
     private StringBuilder sb;
-    private ConnectionActivity app;
+    private String mexRicevuto;
 
-    MyHandler(ConnectionActivity app) {this.app=app;
+    String getMexRicevuto() {return mexRicevuto;}
+
+    MyHandler() {
         sb = new StringBuilder();
+        mexRicevuto = "";
     }
 
     @Override
@@ -20,11 +22,8 @@ public class MyHandler extends android.os.Handler{
                 sb.append(strIncom);
                 int endOfLineIndex = sb.indexOf("\r\n");
                 if (endOfLineIndex > 0) {
-                    String sbprint = sb.substring(0, endOfLineIndex);
+                    mexRicevuto = sb.substring(0, endOfLineIndex);
                     sb.delete(0, sb.length());
-                    String s=app.getT().getText()+"\n"+"RX: "+sbprint;
-                    app.getT().setText(s);
-
                 }
                 break;
         }

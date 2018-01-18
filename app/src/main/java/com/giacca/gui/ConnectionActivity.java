@@ -8,22 +8,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import com.giacca.R;
 import com.giacca.bluetooth.BluetoothConnection;
-import java.util.ArrayList;
 
 public class ConnectionActivity extends AppCompatActivity {
 
     private BluetoothConnection bluetooth;
-    private Button invia;
     private EditText e;
     private TextView t;
     private TextView txtLa;
     private TextView txtLo;
-    private ArrayList<View> views;
 
     public BluetoothConnection getBluetooth() { return bluetooth;}
-    public Button getInvia() {
-        return invia;
-    }
     public EditText getE() {
         return e;
     }
@@ -36,9 +30,6 @@ public class ConnectionActivity extends AppCompatActivity {
     public TextView getTLo() {
         return txtLo;
     }
-    public ArrayList<View> getViews() {
-        return views;
-    }
 
     @Override
     public void onStart() {
@@ -49,22 +40,28 @@ public class ConnectionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connection);
-        invia = (Button) findViewById(R.id.invia);
+        Button invia = (Button) findViewById(R.id.invia);
         Button setData = (Button) findViewById(R.id.setData);
         Button setGps = (Button) findViewById(R.id.setGps);
         txtLa = (TextView) findViewById(R.id.txtLat);
         txtLo = (TextView) findViewById(R.id.txtLo);
         e = (EditText) findViewById(R.id.inserisci);
         t = (TextView) findViewById(R.id.txtViewLog);
-        views = new ArrayList<>();
         String nome = getIntent().getExtras().getString("nome");
         String mac = getIntent().getExtras().getString("mac");
         AscoltatoreConnectionActivity ascoltatore = new AscoltatoreConnectionActivity(this);
-        bluetooth = new BluetoothConnection(this);
+        bluetooth = new BluetoothConnection();
         invia.setOnClickListener(ascoltatore);
         setData.setOnClickListener(ascoltatore);
         setGps.setOnClickListener(ascoltatore);
-        bluetooth.connetti(nome, mac);
+        if (bluetooth.connetti(mac)){
+            String s = R.string.connected + nome;
+            t.setText(s);
+            invia.setVisibility(View.VISIBLE);
+            e.setVisibility(View.VISIBLE);
+        }
+        else
+            t.setText(R.string.error);
     }
 
     @Override
@@ -85,6 +82,9 @@ public class ConnectionActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        bluetooth.disconnetti();
+        if (bluetooth.disconnetti())
+            t.setText(R.string.disconnected);
+        else
+            t.setText(R.string.error);
     }
 }

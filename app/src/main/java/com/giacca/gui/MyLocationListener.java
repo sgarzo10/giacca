@@ -6,6 +6,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.util.Log;
+import com.giacca.R;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -42,11 +43,8 @@ public class MyLocationListener implements LocationListener {
         app.getT().setText(s);
         app.getTLa().setText(Double.toString(loc.getLatitude()));
         app.getTLo().setText(Double.toString(loc.getLongitude()));
-        if (app.getBluetooth().invia("LA:" + Double.toString(loc.getLatitude()) + "LO:" + Double.toString(loc.getLongitude()) + "CITY:" + cityName))
-            Log.i("SEND","Messaggio inviato");
-        else
-            Log.w("SEND","Messaggio non inviato");
-        Log.i("MESSAGE",s);
+        if (!app.getBluetooth().invia("LA:" + Double.toString(loc.getLatitude()) + "LO:" + Double.toString(loc.getLongitude()) + "CITY:" + cityName))
+            app.getT().setText(R.string.error);
     }
 
     @Override
