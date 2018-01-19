@@ -12,20 +12,12 @@
 #define OLED_DC    9  
 #define OLED_CS    8  
 #define OLED_RESET 10  
-#define NUMFLAKES 10
-#define XPOS 0
-#define YPOS 1
-#define DELTAY 2
-#define LOGO16_GLCD_HEIGHT 16
-#define LOGO16_GLCD_WIDTH  16
 
 uint8_t indexPage = 1;
 uint8_t lastIndexPage = 0;
 boolean collegato = false;
 String Data = "dd/mm/yyyy";
 String Ora = "HH:MM";
-String BattStatus = "";
-String BattLevel = "";
 String BLUETOOTH_BUFFER = "";
 int temp = 0;
 int hum = 0;
@@ -53,7 +45,6 @@ void loop()
     BLUETOOTH_COMMAND();
   DisplayPage();
   int ValueBTN = digitalRead(BTN);
-  //Serial.println(ValueBTN);
   if (ValueBTN==0)
   {
     Serial.println("Premuto");
