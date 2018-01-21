@@ -4,7 +4,7 @@ package com.giacca.bluetooth;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import java.util.Set;
-
+//Check
 public class Bluetooth {
     private BluetoothAdapter bluetoothAdapter;
     private boolean acceso;
