@@ -1,5 +1,4 @@
-#include <SPI.h>  
-#include <Wire.h>  
+#include <SPI.h> 
 #include <Adafruit_GFX.h>  
 #include <Adafruit_SSD1306.h>  
 #include <SoftwareSerial.h>
@@ -16,19 +15,17 @@
 
 uint8_t indexPage = 1;
 uint8_t lastIndexPage = 0;
-String Data = "dd/mm/yyyy";
-String Ora = "HH:MM";
-String sData = "dd/mm/yyyy";
-String sOra = "HH:MM";
+String data = "dd/mm/yyyy";
+String ora = "HH:MM";
 String BLUETOOTH_BUFFER = "";
 String Latitude="xx.xxxxx";
 String Longitude="xx.xxxxx";
 String Geocode="Wonderland";
 String Nota="PROVA";
-int interval_DHT11=5000;
-long last_sent=0;
-int temp = 0;
-int hum = 0;
+uint16_t interval_DHT11=5000;
+unsigned long last_sent=0;
+uint8_t temp = 0;
+uint8_t hum = 0;
 dht11 DHT;
 Adafruit_SSD1306 display(OLED_MOSI, OLED_CLK, OLED_DC, OLED_RESET, OLED_CS);  
 SoftwareSerial bluetooth(6, 7); //BLUETOOTH: PIN TXD 6, PIN RXD 7
@@ -43,7 +40,6 @@ void setup(){
 }
 
 void loop(){
-  processSyncMessage();
   unsigned long now = millis();
   if ( now - last_sent >= interval_DHT11  ){
     read_DHT11();
@@ -59,6 +55,7 @@ void loop(){
       indexPage=1;
     else
       indexPage++;
+    delay(200);
   }
 }
 
@@ -72,77 +69,6 @@ void read_DHT11(){
   Serial.println(hum);
 }
 
-void processSyncMessage() {
-  
-  unsigned long pctime;
-  int HH=0;
-  int MM=0;
-  int SS=0;
-  int dd=0;
-  int mm=0;
-  int yyyy=0;
-  String s;
- 
-  if (sData!="dd/mm/yyyy" && sOra != "HH:MM")
-  {
-    //DATA
-    s=sData.substring(0,3);
-    dd=s.toInt();
-    s=sData.substring(3,6);
-    mm=s.toInt();
-    s=sData.substring(6);
-    yyyy=s.toInt();
-    //ORA
-    s=sOra.substring(0,3);
-    HH=s.toInt();
-    s=sOra.substring(3,6);
-    MM=s.toInt();
-    s=sOra.substring(6);
-    SS=s.toInt();
-
-    Serial.print("SYNC:");
-    Serial.print(HH);
-    Serial.print(":");
-    Serial.print(MM);
-    Serial.print(":");
-    Serial.print(SS);
-    Serial.print(" ");
-    Serial.print(dd);
-    Serial.print("/");
-    Serial.print(mm);
-    Serial.print("/");
-    Serial.println(yyyy);    
-    setTime(HH,MM,SS,dd,mm,yyyy); // Sync Arduino clock to the time received on the serial port    
-    Data=String(dd)+"/"+String(mm)+"/"+String(yyyy);
-    Ora=String(HH)+":"+String(MM);
-    sData="dd/mm/yyyy";
-    sOra="HH:MM";
-  }
-  if (day()<10)
-    Data="0"+String(day());
-  else
-    Data=String(day());
-  Data=Data+"/";
-  if (month()<10)
-    Data=Data+"0"+String(month());
-  else
-    Data=Data+String(month());
-  Data=Data+"/";  
-  if (year()<10)
-    Data=Data+"0"+String(year());
-  else
-    Data=Data+String(year());
-  if (hour()<10)
-    Ora="0"+String(hour());
-  else
-    Ora=String(hour());
-  Ora=Ora+":";
-  if (minute()<10)
-    Ora=Ora+"0"+String(minute());
-  else
-    Ora=Ora+String(minute());
-}
-
 void initPage(int cursorX, int cursorY){
   display.clearDisplay();
   display.setTextSize(1);
@@ -154,7 +80,6 @@ void PageStart(){
   initPage(0, 0);
   display.print("Ver.0.2-Menoz/Sga");
   display.setTextSize(2);
-  display.setTextColor(WHITE);
   display.setCursor(0, 10);
   display.print("Bt-Jacket");
   display.display();
@@ -163,11 +88,10 @@ void PageStart(){
 
 void PageOra(){
   initPage(36, 0);
-  display.print(Data);
+  display.print(data);
   display.setTextSize(3);
-  display.setTextColor(WHITE);
   display.setCursor(22, 10);
-  display.print(Ora);
+  display.print(ora);
   display.display();
 }
 
@@ -210,7 +134,6 @@ void PageNota(){
   display.print("NOTA:");
   display.fillRect(0,7,display.width(),1,1%2);  
   display.setTextSize(2);
-  display.setTextColor(WHITE);
   display.setCursor(0, 10);
   display.print(Nota);
   display.display();
@@ -247,8 +170,8 @@ void BLUETOOTH_READ(){
   }
 }
 
-int castMonth(String s){
-  int r=0;
+uint8_t castMonth(String s){
+  uint8_t r=0;
   if (s=="Jan")
     r=1;
   if (s=="Feb")    
@@ -299,9 +222,10 @@ void set_Posizione(String s){
 }
 
 void set_DataOra(String s){
-  sData=s.substring(8,10)+" "+String(castMonth(s.substring(4,7)))+" "+s.substring(s.length()-4);
-  sOra=s.substring(11,19);
-  Serial.println("SET DATA: "+sData+" ORA: "+sOra);
+  data=s.substring(8,10)+" "+String(castMonth(s.substring(4,7)))+" "+s.substring(s.length()-4);
+  ora=s.substring(11,19);
+  setTime(ora.substring(0,2).toInt(),ora.substring(3,5).toInt(),ora.substring(6,8).toInt(),data.substring(0,2).toInt(),data.substring(3,5).toInt(),data.substring(6,10).toInt());
+  Serial.println("SET DATA: "+data+" ORA: "+ora);
 }
 
 void BLUETOOTH_COMMAND(){
@@ -309,11 +233,6 @@ void BLUETOOTH_COMMAND(){
     Serial.println("Collegato!!");
   if (BLUETOOTH_BUFFER.substring(0, 4) == "data")
     set_DataOra(BLUETOOTH_BUFFER.substring(4, BLUETOOTH_BUFFER.length()));
-  if (BLUETOOTH_BUFFER.substring(0, 4) == "ora "){
-    sOra = BLUETOOTH_BUFFER.substring(4, BLUETOOTH_BUFFER.length());
-    Serial.print("syncOra:");
-    Serial.println(Ora);
-  }
   if (BLUETOOTH_BUFFER.substring(0, 4) == "nota"){
     Nota=BLUETOOTH_BUFFER.substring(4, BLUETOOTH_BUFFER.length());
     Serial.println("SET NOTA: "+Nota);
