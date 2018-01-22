@@ -18,9 +18,9 @@ uint8_t lastIndexPage = 0;
 String data = "dd/mm/yyyy";
 String ora = "HH:MM";
 String BLUETOOTH_BUFFER = "";
-String Latitude="xx.xxxxx";
-String Longitude="xx.xxxxx";
-String Geocode="Wonderland";
+String latitude="xx.xxxxx";
+String longitude="xx.xxxxx";
+String city="Wonderland";
 String Nota="PROVA";
 uint16_t interval_DHT11=5000;
 unsigned long last_sent=0;
@@ -45,6 +45,7 @@ void loop(){
     read_DHT11();
     last_sent=now;
   }
+  AGGIORNA_DATA();
   BLUETOOTH_READ();
   if (BLUETOOTH_BUFFER != "")
     BLUETOOTH_COMMAND();
@@ -57,6 +58,29 @@ void loop(){
       indexPage++;
     delay(200);
   }
+}
+
+void AGGIORNA_DATA(){
+  if (day()<10)
+    data="0"+String(day());
+  else
+    data=String(day());
+  data=data+"/";
+  if (month()<10)
+    data=data+"0"+String(month());
+  else
+    data=data+String(month());
+  data=data+"/";
+  data=data+String(year());
+  if (hour()<10)
+    ora="0"+String(hour());
+  else
+    ora=String(hour());
+  ora=ora+":";
+  if (minute()<10)
+    ora=ora+"0"+String(minute());
+  else
+    ora=ora+String(minute());
 }
 
 void read_DHT11(){
@@ -121,11 +145,11 @@ void PageGPS(){
   display.print("POSIZIONE:");
   display.fillRect(0,7,display.width(),1,1%2);
   display.setCursor(0, 9);
-  display.print("Lat.: "+Latitude);
+  display.print("Lat.: "+latitude);
   display.setCursor(0, 16);
-  display.print("Lon.: "+Longitude);
+  display.print("Lon.: "+longitude);
   display.setCursor(0, 24);
-  display.print(Geocode);
+  display.print(city);
   display.display();
 }
 
@@ -200,37 +224,23 @@ uint8_t castMonth(String s){
 }
 
 void set_Posizione(String s){
-  int a_1=0;
-  int a_2=0;
-  int o_1=0;
-  int o_2=0;
-  int c_1=0;
-  int c_2=0;
-  a_1=s.indexOf('a');
-  a_2=s.indexOf('a',a_1+1);
-  Latitude=s.substring(a_1+1,a_2);
-  o_1=s.indexOf('o');
-  o_2=s.indexOf('o',o_1+1);
-  Longitude=s.substring(o_1+1,o_2);
-  c_1=s.indexOf('*');
-  c_2=s.indexOf('*',c_1+1);
-  Geocode=s.substring(c_1+1,c_2);
+  latitude = s.substring(3,s.indexOf("LO:"));
+  longitude = s.substring(s.indexOf("LO:")+3,s.indexOf("CITY:"));
+  city = s.substring(s.indexOf("CITY:")+5,s.length());
   Serial.println("SET POS:");
-  Serial.println("LATITUDINE: "+Latitude);
-  Serial.println("LONGITUDINE: "+Longitude);
-  Serial.println("CITY: "+Geocode);
+  Serial.println("LATITUDINE: "+latitude);
+  Serial.println("LONGITUDINE: "+longitude);
+  Serial.println("CITY: "+city);
 }
 
 void set_DataOra(String s){
-  data=s.substring(8,10)+" "+String(castMonth(s.substring(4,7)))+" "+s.substring(s.length()-4);
-  ora=s.substring(11,19);
-  setTime(ora.substring(0,2).toInt(),ora.substring(3,5).toInt(),ora.substring(6,8).toInt(),data.substring(0,2).toInt(),data.substring(3,5).toInt(),data.substring(6,10).toInt());
+  data=s.substring(8,10)+"/"+String(castMonth(s.substring(4,7)))+"/"+s.substring(s.length()-4);
+  ora=s.substring(11,13)+":"+s.substring(14,16);
+  setTime(s.substring(11,13).toInt(),s.substring(14,16).toInt(),s.substring(17,19).toInt(),data.substring(0,2).toInt(),data.substring(3,5).toInt(),data.substring(6,10).toInt());
   Serial.println("SET DATA: "+data+" ORA: "+ora);
 }
 
 void BLUETOOTH_COMMAND(){
-  if(BLUETOOTH_BUFFER.substring(0, 4) == "check")
-    Serial.println("Collegato!!");
   if (BLUETOOTH_BUFFER.substring(0, 4) == "data")
     set_DataOra(BLUETOOTH_BUFFER.substring(4, BLUETOOTH_BUFFER.length()));
   if (BLUETOOTH_BUFFER.substring(0, 4) == "nota"){

@@ -43,7 +43,7 @@ public class MyLocationListener implements LocationListener {
         app.getT().setText(s);
         app.getTLa().setText(Double.toString(loc.getLatitude()));
         app.getTLo().setText(Double.toString(loc.getLongitude()));
-        if (!app.getBluetooth().invia("LA:" + Double.toString(loc.getLatitude()) + "LO:" + Double.toString(loc.getLongitude()) + "CITY:" + cityName))
+        if (!app.getBluetooth().invia("pos LA:" + Double.toString(loc.getLatitude()) + "LO:" + Double.toString(loc.getLongitude()) + "CITY:" + cityName))
             app.getT().setText(R.string.error);
     }
 
