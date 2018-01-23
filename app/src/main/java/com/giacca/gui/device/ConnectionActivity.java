@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import com.giacca.R;
 import com.giacca.bluetooth.BluetoothConnection;
+import java.util.Date;
 
 public class ConnectionActivity extends AppCompatActivity {
 
@@ -59,6 +60,8 @@ public class ConnectionActivity extends AppCompatActivity {
             t.setText(s);
             invia.setVisibility(View.VISIBLE);
             e.setVisibility(View.VISIBLE);
+            if (!bluetooth.invia("data" + new Date().toString()))
+                t.setText(R.string.send_error);
         }
         else
             t.setText(R.string.error);

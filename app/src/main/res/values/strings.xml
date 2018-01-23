@@ -2,6 +2,7 @@
     <string name="app_name">Arduino</string>
     <string name="saluto">Benvenuto!</string>
     <string name="error">Errore Generico</string>
+    <string name="send_error">Errore invio!</string>
     <string name="connected">Connesso con: </string>
     <string name="disconnected">Disconesso</string>
     <string name="search_finish">Ricerca finita!</string>
